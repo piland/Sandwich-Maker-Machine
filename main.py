@@ -53,23 +53,6 @@ class SandwichMachine:
     def process_coins(self):
         """Returns the total calculated from coins inserted.
            Hint: include input() function here, e.g. input("how many quarters?: ")"""
-        #Process bills, nickels, quarters, half dollars
-        while True:
-            try:
-                dollar = int(input("How many dollars?: "))
-                half_dollar = int(input("How many half dollars? "))
-                quarters = int(input("How many quarters? "))
-                nickels = int(input("How many nickles? "))
-                if dollar < 0 or half_dollar < 0  or quarters < 0 or nickels < 0:
-                    raise ValueError("Negative values are not allowed")
-                break
-            except ValueError as error:
-                print(f"Invalid input, {error}, please try again.")
-
-        #Money logic: quarters times .25, nickels times .05, half dollars times .5
-        #Total the money
-        total = dollar + (half_dollar * .5) + (quarters * .25) + (nickels * .05)
-        return total
 
 
     def transaction_result(self, coins, cost):
@@ -83,6 +66,3 @@ class SandwichMachine:
 
 
 ### Make an instance of SandwichMachine class and write the rest of the codes ###
-sandwich_machine = SandwichMachine(resources)
-coin = sandwich_machine.process_coins()
-print(f"{coin}")
