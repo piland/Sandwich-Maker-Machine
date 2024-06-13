@@ -51,6 +51,8 @@ class SandwichMachine:
         #Need to compare sandwich ingredients with resources
         for ingredient in ingredients:
             if ingredient in self.machine_resources < ingredients:
+                #Print insufficient resources
+                print(f"Insufficient {ingredients}")
                 return False
         #Return true if the above conditional fails
         return True
@@ -77,11 +79,16 @@ class SandwichMachine:
         """Return True when the payment is accepted, or False if money is insufficient.
            Hint: use the output of process_coins() function for cost input"""
         if (coins < cost):
+            #Print insufficient fund
+            print("Insufficient funds.")
             return False
+        #Print change in this method
+        print(f"Change: {coins - cost}")
         return True
 
     def make_sandwich(self, sandwich_size, order_ingredients):
         """Deduct the required ingredients from the resources.
            Hint: no output"""
+        ###Check sandwich size, take the resources required from resources
 
 ### Make an instance of SandwichMachine class and write the rest of the codes ###
