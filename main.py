@@ -48,7 +48,12 @@ class SandwichMachine:
 
     def check_resources(self, ingredients):
         """Returns True when order can be made, False if ingredients are insufficient."""
-
+        #Need to compare sandwich ingredients with resources
+        for ingredient in ingredients:
+            if ingredient in self.machine_resources < ingredients:
+                return False
+        #Return true if the above conditional fails
+        return True
 
     def process_coins(self):
         """Returns the total calculated from coins inserted.
@@ -71,11 +76,12 @@ class SandwichMachine:
     def transaction_result(self, coins, cost):
         """Return True when the payment is accepted, or False if money is insufficient.
            Hint: use the output of process_coins() function for cost input"""
-
+        if (coins < cost):
+            return False
+        return True
 
     def make_sandwich(self, sandwich_size, order_ingredients):
         """Deduct the required ingredients from the resources.
            Hint: no output"""
-
 
 ### Make an instance of SandwichMachine class and write the rest of the codes ###
