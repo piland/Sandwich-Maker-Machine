@@ -49,12 +49,10 @@ class SandwichMachine:
     def check_resources(self, ingredients):
         """Returns True when order can be made, False if ingredients are insufficient."""
         #Need to compare sandwich ingredients with resources
-        for ingredient in ingredients:
-            if ingredient in self.machine_resources < ingredients:
-                #Print insufficient resources
-                print(f"Insufficient {ingredients}")
+        for ingredient, amount in ingredients.items():
+            if self.machine_resources.get(ingredient, 0) < amount:
+                print(f"Sorry, there is not enough {ingredient}.")
                 return False
-        #Return true if the above conditional fails
         return True
 
     def process_coins(self):
@@ -90,5 +88,40 @@ class SandwichMachine:
         """Deduct the required ingredients from the resources.
            Hint: no output"""
         ###Check sandwich size, take the resources required from resources
+        if sandwich_size in recipes:
+            for ingredient, amount in order_ingredients.items():
+                self.machine_resources[ingredient] -= amount
 
 ### Make an instance of SandwichMachine class and write the rest of the codes ###
+
+sandwich_machine = SandwichMachine(resources)
+while True:
+    try:
+        #5 options
+        choice = input("What would you like? (small/medium/large/off/report): ").lower()
+        #Check if off first, and break the while loop
+        if choice == "off":
+            print("Turning off the machine.")
+            break
+        #Check if choice is a report, and print current resources
+        elif choice == "report":
+            print(f"Bread: {sandwich_machine.machine_resources['bread']} slice(s)")
+            print(f"Ham: {sandwich_machine.machine_resources['ham']} slice(s)")
+            print(f"Cheese: {sandwich_machine.machine_resources['cheese']} ounce(s)")
+        #Check if choice is a valid choice, "small", "medium", "large"
+        elif choice in recipes:
+            order_ingredients = recipes[choice]["ingredients"]
+            order_cost = recipes[choice]["cost"]
+
+            #error
+            if sandwich_machine.check_resources(order_ingredients):
+                print("Please insert coins.")
+                total_coins = sandwich_machine.process_coins()
+
+                if sandwich_machine.transaction_result(total_coins, order_cost):
+                    sandwich_machine.make_sandwich(choice, order_ingredients)
+                    print(f"{choice.capitalize()} sandwich is ready. Bon appetit!")
+        else:
+            raise ValueError("Invalid input")
+    except ValueError as e:
+        print(f"{e}, please try again.")
